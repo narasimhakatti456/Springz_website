@@ -42,7 +42,7 @@ export default function AdminProductsPage() {
     refresh 
   } = useRealTimeProducts()
 
-  const products = productsData?.products || []
+  const products = (productsData as any)?.products || []
 
   const deleteProduct = async (productId: string) => {
     if (!confirm('Are you sure you want to delete this product?')) return
@@ -64,7 +64,7 @@ export default function AdminProductsPage() {
     }
   }
 
-  const filteredProducts = products.filter(product =>
+  const filteredProducts = products.filter((product: any) =>
     product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     product.category.name.toLowerCase().includes(searchTerm.toLowerCase())
   )
@@ -133,9 +133,9 @@ export default function AdminProductsPage() {
 
       {/* Products Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredProducts.map((product) => {
+        {filteredProducts.map((product: any) => {
           const images = product.images.split(',').filter(Boolean)
-          const defaultVariant = product.variants.find(v => v.isActive) || product.variants[0]
+          const defaultVariant = product.variants.find((v: any) => v.isActive) || product.variants[0]
           const features = product.features.split(',').filter(Boolean)
 
           return (

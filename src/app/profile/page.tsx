@@ -245,7 +245,7 @@ export default function ProfilePage() {
                   <CardTitle>Personal Information</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <form onSubmit={handleProfileSubmit} className="space-y-4">
+                  <form onSubmit={handleProfileSubmit(onProfileSubmit)} className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -257,7 +257,7 @@ export default function ProfilePage() {
                         />
                         {profileErrors.name && (
                           <p className="mt-1 text-sm text-red-600">
-                            {profileErrors.name.message}
+                            {profileErrors.name.message as string}
                           </p>
                         )}
                       </div>
@@ -310,7 +310,7 @@ export default function ProfilePage() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <form onSubmit={handleAddressSubmit} className="space-y-4">
+                      <form onSubmit={handleAddressSubmit(onAddressSubmit)} className="space-y-4">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -322,7 +322,7 @@ export default function ProfilePage() {
                             />
                             {addressErrors.fullName && (
                               <p className="mt-1 text-sm text-red-600">
-                                {addressErrors.fullName.message}
+                                {addressErrors.fullName.message as string}
                               </p>
                             )}
                           </div>
@@ -336,7 +336,7 @@ export default function ProfilePage() {
                             />
                             {addressErrors.phone && (
                               <p className="mt-1 text-sm text-red-600">
-                                {addressErrors.phone.message}
+                                {addressErrors.phone.message as string}
                               </p>
                             )}
                           </div>
@@ -351,7 +351,7 @@ export default function ProfilePage() {
                           />
                           {addressErrors.line1 && (
                             <p className="mt-1 text-sm text-red-600">
-                              {addressErrors.line1.message}
+                              {addressErrors.line1.message as string}
                             </p>
                           )}
                         </div>
@@ -375,7 +375,7 @@ export default function ProfilePage() {
                             />
                             {addressErrors.city && (
                               <p className="mt-1 text-sm text-red-600">
-                                {addressErrors.city.message}
+                                {addressErrors.city.message as string}
                               </p>
                             )}
                           </div>
@@ -389,7 +389,7 @@ export default function ProfilePage() {
                             />
                             {addressErrors.state && (
                               <p className="mt-1 text-sm text-red-600">
-                                {addressErrors.state.message}
+                                {addressErrors.state.message as string}
                               </p>
                             )}
                           </div>
@@ -403,7 +403,7 @@ export default function ProfilePage() {
                             />
                             {addressErrors.pincode && (
                               <p className="mt-1 text-sm text-red-600">
-                                {addressErrors.pincode.message}
+                                {addressErrors.pincode.message as string}
                               </p>
                             )}
                           </div>

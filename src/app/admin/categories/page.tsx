@@ -35,7 +35,7 @@ export default function AdminCategoriesPage() {
     refresh 
   } = useRealTimeCategories()
 
-  const categories = categoriesData?.categories || []
+  const categories = (categoriesData as any)?.categories || []
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -209,7 +209,7 @@ export default function AdminCategoriesPage() {
 
       {/* Categories Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {categories.map((category) => (
+        {categories.map((category: any) => (
           <Card key={category.id}>
             <div className="relative h-48">
               {category.image ? (

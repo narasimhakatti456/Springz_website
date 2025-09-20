@@ -1,5 +1,6 @@
 import { Card, CardContent } from '@/components/ui/Card'
 import { Leaf, Target, Users, Award } from 'lucide-react'
+import Image from 'next/image'
 
 export default function OurStory() {
   const milestones = [

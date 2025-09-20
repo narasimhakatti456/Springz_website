@@ -10,7 +10,7 @@ const updateCartSchema = z.object({
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -19,13 +19,14 @@ export async function PATCH(
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
     }
 
+    const { id } = await params
     const body = await request.json()
     const { quantity } = updateCartSchema.parse(body)
 
     // Check if cart item belongs to user
     const cartItem = await db.cartItem.findFirst({
       where: {
-        id: params.id,
+        id: id,
         userId: session.user.id
       }
     })
@@ -41,7 +42,7 @@ export async function PATCH(
       // Remove item from cart
       await db.cartItem.delete({
         where: {
-          id: params.id
+          id: id
         }
       })
 
@@ -52,7 +53,7 @@ export async function PATCH(
       // Update quantity
       const updatedItem = await db.cartItem.update({
         where: {
-          id: params.id
+          id: id
         },
         data: {
           qty: quantity
@@ -101,7 +102,7 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -110,10 +111,11 @@ export async function DELETE(
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
     }
 
+    const { id } = await params
     // Check if cart item belongs to user
     const cartItem = await db.cartItem.findFirst({
       where: {
-        id: params.id,
+        id: id,
         userId: session.user.id
       }
     })
@@ -127,7 +129,7 @@ export async function DELETE(
 
     await db.cartItem.delete({
       where: {
-        id: params.id
+        id: id
       }
     })
 

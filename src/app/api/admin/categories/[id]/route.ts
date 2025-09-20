@@ -15,7 +15,7 @@ export async function PATCH(
     }
 
     const { id } = await params
-    const { name, description, image } = await request.json()
+    const { name, description } = await request.json()
 
     if (!name) {
       return NextResponse.json(
@@ -32,8 +32,7 @@ export async function PATCH(
       data: {
         name,
         slug,
-        description,
-        image
+        description
       }
     })
 

@@ -17,7 +17,7 @@ const updateAddressSchema = z.object({
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -26,13 +26,14 @@ export async function PATCH(
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
     }
 
+    const { id } = await params
     const body = await request.json()
     const { fullName, phone, line1, line2, city, state, pincode, isDefault } = updateAddressSchema.parse(body)
 
     // Check if address belongs to user
     const existingAddress = await db.address.findFirst({
       where: {
-        id: params.id,
+        id: id,
         userId: session.user.id
       }
     })
@@ -51,7 +52,7 @@ export async function PATCH(
           userId: session.user.id,
           isDefault: true,
           id: {
-            not: params.id
+            not: id
           }
         },
         data: {
@@ -62,7 +63,7 @@ export async function PATCH(
 
     const updatedAddress = await db.address.update({
       where: {
-        id: params.id
+        id: id
       },
       data: {
         fullName,
@@ -98,7 +99,7 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -107,10 +108,11 @@ export async function DELETE(
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
     }
 
+    const { id } = await params
     // Check if address belongs to user
     const existingAddress = await db.address.findFirst({
       where: {
-        id: params.id,
+        id: id,
         userId: session.user.id
       }
     })
@@ -124,7 +126,7 @@ export async function DELETE(
 
     await db.address.delete({
       where: {
-        id: params.id
+        id: id
       }
     })
 
