@@ -59,9 +59,9 @@ interface OrderDetail {
 }
 
 interface OrderPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export default function OrderDetailPage({ params }: OrderPageProps) {
@@ -69,18 +69,27 @@ export default function OrderDetailPage({ params }: OrderPageProps) {
   const router = useRouter()
   const [order, setOrder] = useState<OrderDetail | null>(null)
   const [loading, setLoading] = useState(true)
+  const [orderId, setOrderId] = useState<string>('')
 
   useEffect(() => {
-    if (session) {
+    const getOrderId = async () => {
+      const { id } = await params
+      setOrderId(id)
+    }
+    getOrderId()
+  }, [params])
+
+  useEffect(() => {
+    if (session && orderId) {
       fetchOrder()
-    } else {
+    } else if (session === null) {
       router.push('/auth/signin')
     }
-  }, [session, router, params.id])
+  }, [session, router, orderId])
 
   const fetchOrder = async () => {
     try {
-      const response = await fetch(`/api/orders/${params.id}`)
+      const response = await fetch(`/api/orders/${orderId}`)
       if (response.ok) {
         const data = await response.json()
         setOrder(data.order)

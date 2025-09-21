@@ -106,36 +106,36 @@ export async function GET(request: NextRequest) {
     // Monthly revenue data
     const monthlyRevenue = await db.$queryRaw`
       SELECT 
-        strftime('%Y-%m', createdAt) as month,
-        SUM(totalInINR) as revenue
-      FROM orders
-      WHERE createdAt >= ${startDate} 
+        TO_CHAR("createdAt", 'YYYY-MM') as month,
+        SUM("totalInINR") as revenue
+      FROM "orders"
+      WHERE "createdAt" >= ${startDate} 
         AND status != 'CANCELLED'
-      GROUP BY strftime('%Y-%m', createdAt)
+      GROUP BY TO_CHAR("createdAt", 'YYYY-MM')
       ORDER BY month
     `
 
     // Daily revenue data (last 30 days)
     const dailyRevenue = await db.$queryRaw`
       SELECT 
-        date(createdAt) as date,
-        SUM(totalInINR) as revenue
-      FROM orders
-      WHERE createdAt >= ${new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)}
+        DATE("createdAt") as date,
+        SUM("totalInINR") as revenue
+      FROM "orders"
+      WHERE "createdAt" >= ${new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)}
         AND status != 'CANCELLED'
-      GROUP BY date(createdAt)
+      GROUP BY DATE("createdAt")
       ORDER BY date
     `
 
     // Monthly orders data
     const monthlyOrders = await db.$queryRaw`
       SELECT 
-        strftime('%Y-%m', createdAt) as month,
+        TO_CHAR("createdAt", 'YYYY-MM') as month,
         COUNT(*) as orders
-      FROM orders
-      WHERE createdAt >= ${startDate}
+      FROM "orders"
+      WHERE "createdAt" >= ${startDate}
         AND status != 'CANCELLED'
-      GROUP BY strftime('%Y-%m', createdAt)
+      GROUP BY TO_CHAR("createdAt", 'YYYY-MM')
       ORDER BY month
     `
 
@@ -190,12 +190,12 @@ export async function GET(request: NextRequest) {
     // New customers by month
     const newCustomers = await db.$queryRaw`
       SELECT 
-        strftime('%Y-%m', createdAt) as month,
+        TO_CHAR("createdAt", 'YYYY-MM') as month,
         COUNT(*) as customers
-      FROM users
-      WHERE createdAt >= ${startDate}
+      FROM "users"
+      WHERE "createdAt" >= ${startDate}
         AND role = 'CUSTOMER'
-      GROUP BY strftime('%Y-%m', createdAt)
+      GROUP BY TO_CHAR("createdAt", 'YYYY-MM')
       ORDER BY month
     `
 

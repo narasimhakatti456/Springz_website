@@ -33,7 +33,7 @@ export default function AdminUsersPage() {
     refresh 
   } = useRealTimeUsers()
 
-  const users = usersData?.users || []
+  const users = (usersData as any)?.users || []
 
   const updateUserRole = async (userId: string, newRole: string) => {
     try {
@@ -67,7 +67,7 @@ export default function AdminUsersPage() {
     }
   }
 
-  const filteredUsers = users.filter(user => {
+  const filteredUsers = users.filter((user: any) => {
     const matchesSearch = 
       user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -80,9 +80,9 @@ export default function AdminUsersPage() {
 
   const stats = {
     totalUsers: users.length,
-    admins: users.filter(u => u.role === 'ADMIN').length,
-    customers: users.filter(u => u.role === 'CUSTOMER').length,
-    newThisWeek: users.filter(u => {
+    admins: users.filter((u: any) => u.role === 'ADMIN').length,
+    customers: users.filter((u: any) => u.role === 'CUSTOMER').length,
+    newThisWeek: users.filter((u: any) => {
       const weekAgo = new Date()
       weekAgo.setDate(weekAgo.getDate() - 7)
       return new Date(u.createdAt) > weekAgo
@@ -189,7 +189,7 @@ export default function AdminUsersPage() {
 
       {/* Users List */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredUsers.map((user) => (
+        {filteredUsers.map((user: any) => (
           <Card key={user.id}>
             <CardContent className="p-6">
               <div className="flex items-center space-x-4 mb-4">

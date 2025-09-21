@@ -6,18 +6,42 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-// Enums are not supported in SQLite, using String with constraints instead
+// Enums for better type safety with PostgreSQL
+enum UserRole {
+  ADMIN
+  CUSTOMER
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+}
+
+enum AddressType {
+  SHIPPING
+  BILLING
+}
 
 model User {
   id           String   @id @default(cuid())
   name         String
   email        String   @unique
   passwordHash String
-  role         String   @default("CUSTOMER") // ADMIN | CUSTOMER
+  role         UserRole @default(CUSTOMER)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
@@ -33,7 +57,7 @@ model User {
 model Address {
   id        String      @id @default(cuid())
   userId    String
-  type      String // SHIPPING | BILLING
+  type      AddressType
   fullName  String
   phone     String
   line1     String
@@ -129,11 +153,11 @@ model Order {
   id                String        @id @default(cuid())
   userId            String
   number            String        @unique
-  status            String        @default("PENDING") // PENDING | CONFIRMED | PROCESSING | SHIPPED | DELIVERED | CANCELLED
+  status            OrderStatus   @default(PENDING)
   subtotalInINR     Int           // Subtotal in paise
   shippingInINR     Int           // Shipping cost in paise
   totalInINR        Int           // Total in paise
-  paymentStatus     String        @default("PENDING") // PENDING | PAID | FAILED
+  paymentStatus     PaymentStatus @default(PENDING)
   trackingNumber    String?
   shippingAddressId String
   billingAddressId  String

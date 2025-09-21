@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
     }
 
-    const { name, description, image } = await request.json()
+    const { name, description } = await request.json()
 
     if (!name) {
       return NextResponse.json(
@@ -58,8 +58,7 @@ export async function POST(request: NextRequest) {
       data: {
         name,
         slug,
-        description,
-        image
+        description
       }
     })
 

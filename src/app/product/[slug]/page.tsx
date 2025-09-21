@@ -6,14 +6,15 @@ import ProductDetail from '@/components/product/ProductDetail'
 import { db } from '@/lib/db'
 
 interface ProductPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export async function generateMetadata({ params }: ProductPageProps) {
+  const { slug } = await params
   const product = await db.product.findUnique({
-    where: { slug: params.slug },
+    where: { slug: slug },
     include: {
       category: true,
       variants: {
@@ -45,8 +46,9 @@ export async function generateMetadata({ params }: ProductPageProps) {
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
+  const { slug } = await params
   const product = await db.product.findUnique({
-    where: { slug: params.slug },
+    where: { slug: slug },
     include: {
       category: true,
       variants: {

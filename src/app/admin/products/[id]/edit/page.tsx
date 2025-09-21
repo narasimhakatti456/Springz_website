@@ -483,7 +483,6 @@ export default function EditProductPage() {
                                 value={variant.size}
                                 onChange={(e) => updateVariant(variant.id!, 'size', e.target.value)}
                                 placeholder="e.g., 1kg"
-                                size="sm"
                               />
                             </div>
                             <div>
@@ -494,7 +493,6 @@ export default function EditProductPage() {
                                 value={variant.flavor || ''}
                                 onChange={(e) => updateVariant(variant.id!, 'flavor', e.target.value)}
                                 placeholder="e.g., Vanilla"
-                                size="sm"
                               />
                             </div>
                             <div>
@@ -506,7 +504,6 @@ export default function EditProductPage() {
                                 value={variant.priceInINR}
                                 onChange={(e) => updateVariant(variant.id!, 'priceInINR', Number(e.target.value))}
                                 placeholder="0"
-                                size="sm"
                               />
                             </div>
                             <div>
@@ -518,7 +515,6 @@ export default function EditProductPage() {
                                 value={variant.originalPriceInINR || ''}
                                 onChange={(e) => updateVariant(variant.id!, 'originalPriceInINR', e.target.value ? Number(e.target.value) : null)}
                                 placeholder="0"
-                                size="sm"
                               />
                             </div>
                             <div>
@@ -530,7 +526,6 @@ export default function EditProductPage() {
                                 value={variant.stock}
                                 onChange={(e) => updateVariant(variant.id!, 'stock', Number(e.target.value))}
                                 placeholder="0"
-                                size="sm"
                               />
                             </div>
                             <div className="flex items-end space-x-2">
@@ -548,7 +543,6 @@ export default function EditProductPage() {
                               </div>
                               <Button
                                 variant="outline"
-                                size="sm"
                                 onClick={() => removeVariant(variant.id!)}
                                 className="text-red-600 hover:text-red-700"
                               >
@@ -576,7 +570,6 @@ export default function EditProductPage() {
                             value={newVariant.size}
                             onChange={(e) => setNewVariant({ ...newVariant, size: e.target.value })}
                             placeholder="e.g., 1kg"
-                            size="sm"
                           />
                         </div>
                         <div>
@@ -587,7 +580,6 @@ export default function EditProductPage() {
                             value={newVariant.flavor || ''}
                             onChange={(e) => setNewVariant({ ...newVariant, flavor: e.target.value })}
                             placeholder="e.g., Vanilla"
-                            size="sm"
                           />
                         </div>
                         <div>
@@ -599,7 +591,6 @@ export default function EditProductPage() {
                             value={newVariant.priceInINR}
                             onChange={(e) => setNewVariant({ ...newVariant, priceInINR: Number(e.target.value) })}
                             placeholder="0"
-                            size="sm"
                           />
                         </div>
                         <div>
@@ -611,7 +602,6 @@ export default function EditProductPage() {
                             value={newVariant.originalPriceInINR || ''}
                             onChange={(e) => setNewVariant({ ...newVariant, originalPriceInINR: e.target.value ? Number(e.target.value) : null })}
                             placeholder="0"
-                            size="sm"
                           />
                         </div>
                         <div>
@@ -623,7 +613,6 @@ export default function EditProductPage() {
                             value={newVariant.stock}
                             onChange={(e) => setNewVariant({ ...newVariant, stock: Number(e.target.value) })}
                             placeholder="0"
-                            size="sm"
                           />
                         </div>
                         <div className="flex items-end">
@@ -731,7 +720,6 @@ export default function EditProductPage() {
                             <div className="flex justify-end">
                               <Button
                                 variant="outline"
-                                size="sm"
                                 onClick={() => removeFAQ(index)}
                                 className="text-red-600 hover:text-red-700"
                               >
